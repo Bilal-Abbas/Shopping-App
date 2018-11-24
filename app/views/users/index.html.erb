@@ -1,0 +1,51 @@
+<% @page_title = "Users" %>
+
+<div class="Users index">
+  <br/>
+  <% if current_user %>
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => 'action sign_out' %>
+        <% else %>       
+          <%= link_to "Sign in", new_user_session_path, :class => 'action sign_in' %>
+          <%= link_to "Sign up", new_user_registration_path, :class => 'action sign_up' %>
+   <% end %>
+  <h2>Users</h2>
+
+  <table class="listing" summary="user list">
+    <tr class="header">
+      <th>&nbsp;</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Products</th>
+
+      <th>Actions</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr class="<%= cycle('even', 'odd')%>" >
+      <td><%= user.id %></td>
+      <td><%= user.uname if user.products %></td>
+      <td><%= user.utype %></td>
+      <td><%= user.products.map{|p| p.pname} %></td>
+
+
+       <td class="actions">
+        <% if policy(user).show? %>
+        <%= link_to("Show", {:action => 'show', :id => user.id} , :class => 'action show') %>
+        <% end %>
+
+        <% if policy(user).edit? %>
+        <%= link_to("Edit", '#' , :class => 'action edit') %>
+        <% end %>
+
+        <% if policy(user).destroy? %>
+        <%= link_to("Delete", '#' , :class => 'action delete') %>
+        <% end %>
+
+        <% if policy(user).view_products? %>
+        <%= link_to("View Products", '#', :class => 'action show') %>
+        <% end %>
+
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
