@@ -1,10 +1,14 @@
 class CreateShops < ActiveRecord::Migration[5.2]
   def up
     create_table :shops do |t|
-	
-		t.string 'sname'
 
-    	t.string 'stype'
+  		t.string 'name'
+
+      t.string 'email'
+
+    	t.string 'address'
+
+      t.integer 'phone'
 
       t.timestamps
     end

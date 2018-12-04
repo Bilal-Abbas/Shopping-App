@@ -1,32 +1,56 @@
 class User < ApplicationRecord
-  rolify
+	self.inheritance_column = :foo
+ 	rolify
+  	after_save :after_add_user
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable
 
-	has_many :sellings
-	has_many :products, through: :sellings
-	has_many :buyers, through: :sellings, :source => :sell, :source_type => 'Selling'
+	has_many :sellings, dependent: :destroy
+	has_many :products, through: :sellings, dependent: :destroy
+	#has_many :buyers, through: :sellings, :source => :buyer, :source_type => 'Selling'
+	belongs_to :shop, :foreign_key => 'shop_id', optional: true
 
-	def admin?
+	# validates_presence_of :uname
+	# validates_length_of :uname, :maximum => 30
+	# validates_presence_of :permalink
+	# validates_length_of :name, :within => 0..25
+	# validates_uniqueness_of :permalink
 
-		has_role? :admin
+	def store_admin?
 
-	end
-
-	def buyer?
-
-		has_role? :buyer
+		self.has_role? :store_admin
 
 	end
 
 	def seller?
 
-		has_role? :buyer
+		self.has_role? :seller
 
 	end
 
+	def buyer?
+
+		self.has_role? :buyer
+
+	end
+
+	private
+    
+     def after_add_user
+     	#byebug
+
+     	if self.type == 'seller'
+
+	 		self.add_role(:seller)
+	 		
+	 	elsif self.type == 'buyer'
+
+	 		self.add_role(:buyer)
+	 	end
+      end
+#byebug
 
 	scope :visible, lambda { where(:visible => true) }
 	

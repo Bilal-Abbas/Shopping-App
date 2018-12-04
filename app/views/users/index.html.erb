@@ -2,13 +2,13 @@
 
 <div class="Users index">
   <br/>
-  <% if current_user %>
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => 'action sign_out' %>
-        <% else %>       
-          <%= link_to "Sign in", new_user_session_path, :class => 'action sign_in' %>
-          <%= link_to "Sign up", new_user_registration_path, :class => 'action sign_up' %>
-   <% end %>
+  <%= link_to('<<Back to Products', :controller => 'products', :action => 'index') %>
   <h2>Users</h2>
+
+    <% if policy(User).create_users? %>
+      <%= link_to('Add User', {:action => 'new'}, :class => 'action new') %>
+    <% end %>
+
 
   <table class="listing" summary="user list">
     <tr class="header">
@@ -16,15 +16,15 @@
       <th>Name</th>
       <th>Type</th>
       <th>Products</th>
-
       <th>Actions</th>
     </tr>
     <% @users.each do |user| %>
     <tr class="<%= cycle('even', 'odd')%>" >
+      <% next if user.id == 1 %>
       <td><%= user.id %></td>
-      <td><%= user.uname if user.products %></td>
-      <td><%= user.utype %></td>
-      <td><%= user.products.map{|p| p.pname} %></td>
+      <td><%= user.name if user.products %></td>
+      <td><%= user.type if user.products %></td>
+     <td><%= user.products.map{|p| p.name} %></td>
 
 
        <td class="actions">
@@ -32,16 +32,17 @@
         <%= link_to("Show", {:action => 'show', :id => user.id} , :class => 'action show') %>
         <% end %>
 
-        <% if policy(user).edit? %>
-        <%= link_to("Edit", '#' , :class => 'action edit') %>
+         <% if policy(user).add_products? %>
+         
+        <%= link_to("Add Product", {:controller => 'products', :action => 'new', :id => user.id}, :class => 'action show') %>
+        <% end %>
+
+        <% if policy(user).buy_products? && user.type != current_user.type %>
+        <%= link_to("Buy Products",{:controller => 'sellings', :action => 'trade', :id => user.id}, :class => 'action show') %>
         <% end %>
 
         <% if policy(user).destroy? %>
-        <%= link_to("Delete", '#' , :class => 'action delete') %>
-        <% end %>
-
-        <% if policy(user).view_products? %>
-        <%= link_to("View Products", '#', :class => 'action show') %>
+        <%= link_to("Delete User", {action: 'delete', :id => user.id} , :class => 'action delete') %>
         <% end %>
 
       </td>

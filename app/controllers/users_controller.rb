@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
 	 layout 'admin'
 
+	 # prepend_before_action :require_no_authentication, only: :cancel
+
 	#before_action :confirm_logged_in
 	
 
 	  def index
+	  	
 	    @users = User.all
 	    authorize @users
 	  end
@@ -19,40 +22,49 @@ class UsersController < ApplicationController
 	  	authorize @user
 	  end
 
-	  #def new
-	    #@user = User.new()
-	  #end
+	  def new
+	  	#byebug
+	    @user = User.new()
+	  	authorize @user
+	  	#byebug
+	  end
 
-	  #def create
-	    #@user = User.new(user_params)
-      #Save the object
-        #if @user.save
-        #If save succeeds, redirect to other page by an action
-          #flash[:notice] = "User has saved successfully."
-          #redirect_to(:action => 'index')
-        #else
-        #If the save fails, redisplay the form again to fix the problem
-          #@subject_count = User.count + 1
-          #render('new')
-        #end
-	  #end
+	  # def create
+	  #   @user = User.new(user_params)
+   #    	authorize @user
+      	
+      	
+   #      if @user.save
+   #        flash[:notice] = "User has saved successfully."
+   #        redirect_to(:action => 'index')
+   #      else
+   #        flash[:notice] = "User has not creted."
+   #        render('new')
+   #      end
+	  # end
 
 	  def update
 	  	authorize @user
 	  end
 
 	  def delete
-	  	authorize @user
+	  	@user = User.find(params[:id])
+		authorize @user
 	  end
 
 	  def destroy
-	  	authorize @user
+	  	@user = User.find(params[:id]).destroy
+    	authorize @user
+    	flash[:notice] = "The user has deleted sucessfully"
+    	redirect_to(:controller => 'users', :action => 'index')
 	  end
 
-	#private
+	private
 
-    #def user_params
+    def user_params
 
-     ##end
+    	params.require(:user).permit(:name, :type, :email, :password, :remember_me)
+
+    end
 	  
 end

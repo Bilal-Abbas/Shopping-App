@@ -4,7 +4,7 @@ class CreateSellings < ActiveRecord::Migration[5.2]
 
  		t.references :user, foreign_key: true
     	t.references :product, foreign_key: true
-    	t.references :sell, :polymorphic => true, :index => true
+    	t.references :buyer, :polymorphic => true, :index => true
 
       t.timestamps
     end

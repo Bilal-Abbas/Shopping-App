@@ -1,4 +1,9 @@
 class Shop < ApplicationRecord
+
+	has_many :users
+
+	# has_many :store_admins
+
 	has_many :sellings, :as => :sell
 
 	scope :visible, lambda { where(:visible => true) }

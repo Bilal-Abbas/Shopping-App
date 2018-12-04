@@ -4,6 +4,8 @@
 
 	<title> Shoping Center | <%= @page_title || "Admin" %> Buying Selling </title>
 	<%= stylesheet_link_tag('application', :media => 'all') %>
+	<%= javascript_include_tag 'application'%>
+	<%= csrf_meta_tag %>
 
 	</head>
 
@@ -23,6 +25,12 @@
 				<% end %>
 
 			<div id="content">
+				 <% if current_user %>
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete, :class => 'action sign_out' %>
+        <% else %>       
+          <%= link_to "Sign up", new_user_registration_path, :class => 'action sign_up' %>
+          <%= link_to "Log in", new_user_session_path, :class => 'action sign_in' %>
+   <% end %>
 
 			<%= yield %>
 
