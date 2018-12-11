@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
 		
 		t.string 'name', :null => true;
 
-    	t.integer 'quantity', :null => true;
+    	t.integer 'price', :null => true;
     	
       t.timestamps
     end

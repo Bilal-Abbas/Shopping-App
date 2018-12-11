@@ -1,7 +1,8 @@
 class Selling < ApplicationRecord
+	
+	belongs_to :user
 	belongs_to :product
- 	belongs_to :user
-  	belongs_to :buyer, :polymorphic => true, optional: true
+  	belongs_to :buyer, :polymorphic => true
   	
   	scope :visible, lambda { where(:visible => true) }
 	

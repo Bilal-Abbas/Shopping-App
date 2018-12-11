@@ -2,7 +2,9 @@ class CreateShops < ActiveRecord::Migration[5.2]
   def up
     create_table :shops do |t|
 
-  		t.string 'name'
+  		t.integer 'store_admin_id'
+
+      t.string 'name'
 
       t.string 'email'
 
@@ -12,6 +14,7 @@ class CreateShops < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+     add_index :shops, "store_admin_id"
   end
    def down
 

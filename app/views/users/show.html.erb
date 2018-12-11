@@ -1,36 +1,41 @@
 <% @page_title = "Shown Users" %>
 
 
-<%= link_to("<<Back to List", {:action => 'index'}, :class => 'back-link') %>
+<%= link_to(image_tag('back_button.png', :size => '40x40', :alt => 'back') +"Back to Users", {:action => 'index'}, :class => 'back_link') %>
 
-  <div class="user show">
-    <h2>Shown Users </h2>
+    <h2 class='center'>User Data</h2>
 
-    <table summary="users details view">
-      <tr>
-        <th>Name:</th>
-        <td><%=@user.name%></td>
-      </tr>
-      <tr>
-        <th>Type:</th>
-        <td><%=@user.type%></td>
-      </tr>
+     <div class="jumbotron">
 
-      <tr>
-        <th>Products:</th>
-        <td><%=@user.products.map {|p| p.pname}%></td>
-      </tr>
-      <tr>
-        <th>Quantity:</th>
-        <td><%=@user.products.map {|p| p.pquantity}%></td>
-      </tr>
+        <div class='user_show'>
 
-        <th>Created:</th>
-        <td><%=@user.created_at %></td>
-      </tr>
-      <tr>
-        <th>Updated:</th>
-        <td><%= @user.updated_at %></td>
-      </tr>
-    </table>
+          <table summary="users details view">
+            <tr>
+              <th>Name:</th>
+              <td><%=@user.name%></td>
+            </tr>
+            <tr>
+              <th>Type:</th>
+              <td><%=@user.type.capitalize%></td>
+            </tr>
+
+            <tr>
+               <th>Products:</th>
+                <td><%=@user.products.map {|p| p.name} %></td>
+            </tr>
+            <tr>
+              <th>Price:</th>
+              <td><%=@user.products.map {|p| p.price}%></td>
+            </tr>
+
+              <th>Created:</th>
+              <td><%=@user.created_at %></td>
+            </tr>
+            <tr>
+              <th>Updated:</th>
+              <td><%= @user.updated_at %></td>
+            </tr>
+          </table>
+      </div>
+
   </div>

@@ -2,12 +2,14 @@ class CreateSellings < ActiveRecord::Migration[5.2]
   def up
     create_table :sellings do |t|
 
- 		t.references :user, foreign_key: true
-    	t.references :product, foreign_key: true
+      t.integer 'user_id', :null => false;
+    	t.integer 'product_id', :null => false;
+      t.integer 'product_price', :null => false;
     	t.references :buyer, :polymorphic => true, :index => true
 
       t.timestamps
     end
+    add_index :sellings, ['user_id', 'product_id']
   end
   def down
 

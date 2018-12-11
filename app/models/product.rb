@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
-	has_many :sellings, dependent: :destroy
-	has_many :users, through: :sellings
+	
+	has_many :sellings
+
+	has_and_belongs_to_many :users
 	
 	scope :visible, lambda { where(:visible => true) }
 	

@@ -7,11 +7,15 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :validatable
 
-	has_many :sellings, dependent: :destroy
-	has_many :products, through: :sellings, dependent: :destroy
+	#has_many :products, through: :sellings, dependent: :destroy
+	#belongs_to :selling, optional: true
+	has_many :sellings
+	has_many :sellings, :as => :buyer
+	#has_many :sellings, :as => :sell
 	#has_many :buyers, through: :sellings, :source => :buyer, :source_type => 'Selling'
 	belongs_to :shop, :foreign_key => 'shop_id', optional: true
 
+	has_and_belongs_to_many :products
 	# validates_presence_of :uname
 	# validates_length_of :uname, :maximum => 30
 	# validates_presence_of :permalink
@@ -51,6 +55,10 @@ class User < ApplicationRecord
 	 	end
       end
 #byebug
+
+	scope :seller, lambda { where(:type => 'seller') }
+
+	scope :buyer, lambda { where(:type => 'buyer') }
 
 	scope :visible, lambda { where(:visible => true) }
 	

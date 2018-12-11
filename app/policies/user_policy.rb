@@ -1,7 +1,27 @@
 class UserPolicy < ApplicationPolicy
 
 	def index?
-		true
+
+		user.seller? || user.store_admin?
+
+	end
+
+	def Sindex?
+
+		user.store_admin?
+
+	end
+
+	def Admin?
+
+		user.store_admin? && user.present?
+
+	end
+
+	def Seller?
+
+		user.present? && (user == owner && user.seller?)
+
 	end
 
 	def show?
@@ -30,7 +50,7 @@ class UserPolicy < ApplicationPolicy
 	end
 
 	def add_products?
-		user.present? && (user == owner && user.seller?)
+		
 	end
 
 	def buy_products?
@@ -39,14 +59,27 @@ class UserPolicy < ApplicationPolicy
 
 	def trade?
 
-		user.present?
+		user.present? && user.buyer?
 
+	end
+
+	def buying_from_user?
+
+		user.buyer?
+
+	end
+
+	def sell_to_user?
+		user.present? && user.seller?
 	end
 
 	def selling_to_user?
 
-		true
+		user.seller?
+	end
 
+	def home?
+		true
 	end
 
 	private

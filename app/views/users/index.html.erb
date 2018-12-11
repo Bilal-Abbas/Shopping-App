@@ -1,52 +1,61 @@
-<% @page_title = "Users" %>
+<% @page_title = "Users Index" %>
+<%= link_to(image_tag('forward_button.png', :size => '23x23', :alt => '-->', :class => 'forward') + "View Shop", {controller: 'products',:action => 'index'}, :class => 'forward_link')%>
+<div class='center'>
+  <h1> User Panel </h1>
+</div>
+<% @users.each do |user| %>
+<% if policy(user).Seller? %>
+<%= link_to '<button type="button" ">Add Product</button>'.html_safe, {controller: 'products', :action => 'new', :id => user.id}, :class => 'action_new'%>
+<% end %>
+<% end %>
+</br>
+</br>
+<div class= 'jumbotron'>
 
-<div class="Users index">
-  <br/>
-  <%= link_to('<<Back to Products', :controller => 'products', :action => 'index') %>
-  <h2>Users</h2>
-
-    <% if policy(User).create_users? %>
-      <%= link_to('Add User', {:action => 'new'}, :class => 'action new') %>
-    <% end %>
-
-
-  <table class="listing" summary="user list">
+   <table class="listing" summary="user list">
     <tr class="header">
-      <th>&nbsp;</th>
+      <!-- <th>&nbsp;</th> -->
       <th>Name</th>
       <th>Type</th>
       <th>Products</th>
       <th>Actions</th>
     </tr>
     <% @users.each do |user| %>
-    <tr class="<%= cycle('even', 'odd')%>" >
-      <% next if user.id == 1 %>
-      <td><%= user.id %></td>
-      <td><%= user.name if user.products %></td>
-      <td><%= user.type if user.products %></td>
-     <td><%= user.products.map{|p| p.name} %></td>
+      <% if user.id == current_user.id || current_user.store_admin? %>
+              <tr class="<%= cycle('even', 'odd')%>" >
+                <% next if user.id == 1 || user.type == 'buyer' %>
+                <!-- <td><%= user.id %></td> -->
+                <td><%= user.name if user.products %></td>
+                <td><%= user.type.capitalize if user.type == 'seller' || user.products %></td>
+               <td><%= user.products.count %></td>
 
 
-       <td class="actions">
-        <% if policy(user).show? %>
-        <%= link_to("Show", {:action => 'show', :id => user.id} , :class => 'action show') %>
+                 <td class="actions">
+
+                 <% if policy(user).Admin? || policy(user).Seller? %>
+                  
+                  <%= link_to('<button type="button" ">User Details</button>'.html_safe, {action: 'show', :id => user.id} , :class => 'action_user') %>
+
+                  <% end %>
+
+                  <% if policy(user).Seller? %>
+
+                  <%= link_to('<button type="button" ">Sell to User</button>'.html_safe, {controller: 'sellings', action: 'sell_to_user', :seller_id => user.id} , :class => 'action_user')
+                   %>
+
+
+                  <%= link_to('<button type="button" ">Sell to Shop</button>'.html_safe, {action: 'sell_to_shop', :seller_id => user.id} , :class => 'action_user') %>
+                  
+                  <% end %>
+
+                  <% if policy(user).Admin? %>
+                  <%= link_to('<button type="button" ">Delete User</button>'.html_safe, {action: 'delete', :id => user.id} , :class => 'action_user') %>
+                  <% end %>
+
+                </td>
+              </tr>
+          <% end %>
         <% end %>
-
-         <% if policy(user).add_products? %>
-         
-        <%= link_to("Add Product", {:controller => 'products', :action => 'new', :id => user.id}, :class => 'action show') %>
-        <% end %>
-
-        <% if policy(user).buy_products? && user.type != current_user.type %>
-        <%= link_to("Buy Products",{:controller => 'sellings', :action => 'trade', :id => user.id}, :class => 'action show') %>
-        <% end %>
-
-        <% if policy(user).destroy? %>
-        <%= link_to("Delete User", {action: 'delete', :id => user.id} , :class => 'action delete') %>
-        <% end %>
-
-      </td>
-    </tr>
-    <% end %>
   </table>
+
 </div>

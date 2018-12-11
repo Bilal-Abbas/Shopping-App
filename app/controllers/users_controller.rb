@@ -1,20 +1,19 @@
 class UsersController < ApplicationController
-	 layout 'admin'
 
 	 # prepend_before_action :require_no_authentication, only: :cancel
 
 	#before_action :confirm_logged_in
-	
+	@i == 0
 
 	  def index
-	  	
-	    @users = User.all
-	    authorize @users
+		    @users = User.seller
+		    authorize @users
 	  end
 
 	  def show
-	    @user = User.find(params[:id])
-	    authorize @user
+	  	
+		    @user = User.find(params[:id])
+		    authorize @user
 	  end
 
 	  def edit

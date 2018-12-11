@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  get 'sellings/index'
-  get 'sellings/trade'
-  get 'sellings/delete'
-  get 'sellings/destroy'
+
+  # namespace :store_admins do
+  #   get 'store_admins/index'
+
+  # end
   #devise_for :store_admins
 
   #devise_scope :store_admins do
@@ -10,24 +11,26 @@ Rails.application.routes.draw do
     #get 'store_admins', to: 'devise/sessions#new'
 
  # end
+  get 'store_admin/Sindex', as: 'store_admin_path'
+  get 'store_admin/new', to: 'store_admin#new'
+  get 'store_admin/create', to: 'store_admin#create'
+  get 'store_admin/delete' => 'store_admin#delete'
+  # get 'store_admin/destroy' => 'store_admin#destroy'
+  get 'users/index', as: 'user_path'
 
- devise_for :users, controllers: {
-        registrations: 'users/registrations',
-        sessions: 'users/sessions'
-      }
+  get 'products/index', as: 'product_path'
+
+ devise_for :users, controllers: {registrations: 'users/registrations', sessions: 'users/sessions'}, path: '', path_name: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
   
-  devise_scope :user do
+  # devise_scope :user do
     
-  	get 'shop_app', to: 'devise/sessions#new'
-    get '/users/sign_out' => 'devise/sessions#destroy', as: 'logout'
-    #get '/users/sign_up', to: 'users#new', as: 'sign_up'
-   # match '/users/:id', :to => 'users#show', :as => :user
-  end
+  # end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users
+  resources :store_admin
   resources :products
-  root "products#index" 
+  root "public#home"
 
   match ':controller(/:action(/:id))', :via => [:get, :post]
 

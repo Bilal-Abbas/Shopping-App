@@ -1,21 +1,39 @@
 class ApplicationController < ActionController::Base
-	layout 'admin'
 
 	before_action :configure_permitted_parameters, if: :devise_controller?
 
- 	protect_from_forgery with: :exception
+ 	protect_from_forgery
 
  	include Pundit
 
  	after_action :verify_authorized, unless: :devise_controller?
+    
  
- def after_sign_in_path_for(user)
+ def after_sign_in_path_for(resource)
      if current_user.store_admin?
-       return users_url
-     else
-       return products_url
+       store_admin_path_url
+     elsif current_user.seller?
+       user_path_url
+    else
+        product_path_url
      end
-  end
+end
+
+
+
+    # def after_sign_in_path_for(resource)
+    #   sign_in_url = new_user_session_path
+    #   #byebug
+    #   #root_path
+    #   if current_user.store_admin?
+    #   	flash[:notice] = "You have logged in."
+    #   	redirect_to users_path
+    #   else
+    #   	flash[:notice] = "Something went wrong."
+    #     stored_location_for(resource) || request.referer || root_path
+    #   end
+    # end
+
 
    private
 

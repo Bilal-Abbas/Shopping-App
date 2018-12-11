@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ShopApp</title>
+     <title> ShopApp | <%= @page_title || "Admin" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-   <%= stylesheet_link_tag 'application', media: 'all' %>
-   <%= javascript_include_tag 'application' %>
-
-
+  <%= stylesheet_link_tag('application', :media => 'all') %>
+  <%= javascript_include_tag('application') %>
    </head>
 
   <body>
-   
-     <p class="notice"><%= notice %></p>
-     <p class="alert"><%= alert %></p>
-    <%= yield %>
+   <%= render 'layouts/navigation' %>
+
+       <p class="notifications"><%= notice %></p>
+       <p class="notifications"><%= alert %></p>
+     <div class='container'>
+
+        <%= yield %>
+    </div>
+
+<%= render 'layouts/footer' %>
   </body>
 </html>
