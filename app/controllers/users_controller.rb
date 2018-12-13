@@ -3,11 +3,17 @@ class UsersController < ApplicationController
 	 # prepend_before_action :require_no_authentication, only: :cancel
 
 	#before_action :confirm_logged_in
-	@i == 0
+
+	before_action :require_user
 
 	  def index
 		    @users = User.seller
 		    authorize @users
+	  end
+
+	  def buyer_page
+	  	@users = User.buyer
+	  	authorize @users
 	  end
 
 	  def show

@@ -1,0 +1,38 @@
+<h2>Create User</h2>
+
+<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+
+  <div class="Sign_Up">
+
+  <div class="field">
+      <%= f.label :Name %><br />
+      <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+    </div>
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.select :type, ['seller', 'buyer'], :prompt => 'Select One' %>
+  </div>
+</br>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+</br>
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+</br>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+</br>
+	<div class="form-buttons">
+		<%= submit_tag("Create User")%>
+	</div>
+<% end %>
+</div>

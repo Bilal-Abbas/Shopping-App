@@ -1,5 +1,4 @@
 <% @page_title = "Users Index" %>
-<%= link_to(image_tag('forward_button.png', :size => '23x23', :alt => '-->', :class => 'forward') + "View Shop", {controller: 'products',:action => 'index'}, :class => 'forward_link')%>
 <div class='center'>
   <h1> User Panel </h1>
 </div>
@@ -25,9 +24,9 @@
               <tr class="<%= cycle('even', 'odd')%>" >
                 <% next if user.id == 1 || user.type == 'buyer' %>
                 <!-- <td><%= user.id %></td> -->
-                <td><%= user.name if user.products %></td>
+                <td><button type="button" class="btn btn-default"><%= user.name if user.products %></button></td>
                 <td><%= user.type.capitalize if user.type == 'seller' || user.products %></td>
-               <td><%= user.products.count %></td>
+               <td><button type="button" class="btn btn-default"><%= user.products.count %></button></td>
 
 
                  <td class="actions">
@@ -40,11 +39,8 @@
 
                   <% if policy(user).Seller? %>
 
-                  <%= link_to('<button type="button" ">Sell to User</button>'.html_safe, {controller: 'sellings', action: 'sell_to_user', :seller_id => user.id} , :class => 'action_user')
-                   %>
 
-
-                  <%= link_to('<button type="button" ">Sell to Shop</button>'.html_safe, {action: 'sell_to_shop', :seller_id => user.id} , :class => 'action_user') %>
+                  <%= link_to('<button type="button" ">Sell to Shop</button>'.html_safe, {:controller => 'sellings', action: 'sell_to_shop', :seller_id => user.id} , :class => 'action_user') %>
                   
                   <% end %>
 

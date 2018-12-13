@@ -1,0 +1,42 @@
+<h1> Admin Page </h1>
+
+<table class="listing" summary="user list">
+    <tr class="header">
+      <th>&nbsp;</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Products</th>
+      <th>Actions</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr class="<%= cycle('even', 'odd')%>" >
+      <% next if user.id == 1 %>
+      <td><%= user.id %></td>
+      <td><%= user.name if user.products %></td>
+      <td><%= user.type if user.products %></td>
+     <td><%= user.products.map{|p| p.name} %></td>
+
+
+       <td class="actions">
+        <% if policy(user).show? %>
+        <%= link_to("Show", {:action => 'show', :id => user.id} , :class => 'action show') %>
+        <% end %>
+
+         <% if policy(user).add_products? %>
+         
+        <%= link_to("Add Product", {:controller => 'products', :action => 'new', :id => user.id}, :class => 'action show') %>
+        <% end %>
+
+        <% if policy(user).buy_products? && user.type != current_user.type %>
+        <%= link_to("Buy Products",{:controller => 'sellings', :action => 'trade', :id => user.id}, :class => 'action show') %>
+        <% end %>
+
+        <% if policy(user).destroy? %>
+        <%= link_to("Delete User", {action: 'delete', :id => user.id} , :class => 'action delete') %>
+        <% end %>
+
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

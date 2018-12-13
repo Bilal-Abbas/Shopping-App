@@ -1,0 +1,48 @@
+<% @page_title = "Transactions Detail" %>
+<% if current_user.buyer? %>
+
+       <%= button_to "Buy Product", buyer_path_url, :method => "get", :class => 'back_button' %>
+
+<% end %>
+
+<% if current_user.store_admin? %>
+
+	<%= button_to "Back To Main Page",store_admin_path_url, :method => "get", :class => 'back_button' %>
+
+<% end %>
+<h1 class='center'> Transactions Detail </h1>
+
+<div class="center jumbotron">
+
+
+	<table cellspacing="10" class="listing" summary="user list">
+
+    <tr class="header">
+      <!-- <th>&nbsp;</th> -->
+      <th>Buyer Name</th>
+      <th>Buyer Type</th>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Seller Name</th>
+    </tr>
+
+    <% @sellings.each do |selling| %>
+
+    <tr class="<%= cycle('even', 'odd')%>"  >
+      
+	     <td style="padding: 1% 0 1% 0;"> <button type="button" class="btn btn-primary"><%= selling.buyer.name %></button></td>
+	     <td><button type="button" class="btn btn-success"><%= selling.buyer_type %></button></td>
+	      <td><button type="button" class="btn btn-info"><%= selling.product.name %></button></td>
+	      <td><button type="button" class="btn btn-danger"><%= selling.product_price%></button></td>
+       <%if selling.user.name == 'GigaLabs' %>
+        	<td><button type="button" class="btn btn-warning"><%= 'Anarkalli Febrics' %></button></td>
+      <% else %>	
+     	 <td><button type="button" class="btn btn-warning"><%= selling.user.name %></button></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+
+
+
+</div>

@@ -16,9 +16,12 @@ Rails.application.routes.draw do
   get 'store_admin/create', to: 'store_admin#create'
   get 'store_admin/delete' => 'store_admin#delete'
   # get 'store_admin/destroy' => 'store_admin#destroy'
-  get 'users/index', as: 'user_path'
+  get 'users/index', as: 'seller_path'
+
+  get 'users/buyer_page', as: 'buyer_path'
 
   get 'products/index', as: 'product_path'
+  get 'products/Sindex', to: 'products#Sindex'
 
  devise_for :users, controllers: {registrations: 'users/registrations', sessions: 'users/sessions'}, path: '', path_name: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
   

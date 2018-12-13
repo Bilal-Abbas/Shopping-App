@@ -1,0 +1,29 @@
+<% @page_title = "Shop Page" %>
+<h1 class='center'>Welcome To The Shop</h1>
+<div class="center jumbotron" id='home'>
+	<div class='row'>
+
+	<div class='col-sm-5' style='background-color: rgba(0,0,0, 0.5);'>
+		<h2 class="display-4" style='color:white;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif'>To Buy From User</br>Click Here</h2>
+		</br>
+		</br>
+
+		<%= link_to 'Buy From User', {controller: 'products', action: 'index', :user_id => current_user.id}, class: "btn btn-primary btn-lg" %>
+			</br>
+			</br>
+	</div>
+
+	<div class='col-sm-1' style="margin-right: 7%;">
+	</div>
+
+	<div class='col-sm-5' style='background-color: rgba(0,0,0, 0.5);'  >
+		<h2 class="display-4" style='color:white;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif'>To Buy From Shop</br>Click Here</h2>
+		</br>
+		</br>
+		<%= link_to 'Buy From Shop', {controller: 'products', action: 'Sindex', :user_id => current_user.id}, class: "btn btn-primary btn-lg" %>
+	</br>
+	</br>
+	</div>
+</div>
+  
+</div>

@@ -1,0 +1,83 @@
+<% @page_title = "Shopping Store" %>
+
+	<h2 class='center'>Welcome Shopping Store</h2>
+	<h2 class='center'>Trade Details</h2>
+	<div class="jumbotron">
+		<%= form_for(:selling, :url => {:action => 'buying_products_from_users', :shop_id => @shops.map{|u| u.id}.first, :product_id => @product.id}) do |f| %>
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:seller, 'Seller Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.text_field :seller_name, :value => @user.name, :readonly => true %>
+							<%= f.hidden_field :user_id, :value => @user.id %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>	
+
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:products, 'Product Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.text_field :product, :value => @product.name, :readonly => true %>
+							<%= f.hidden_field :product_id, :value => @product.id %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>	
+
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:product_price, 'Price(Rs.):') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.text_field :product_price, :value => @product.price, :readonly => true %>
+							
+							<%= f.hidden_field :buyer_type, :value => 'Shop' %>
+							
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:buyer, 'Shop Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.select(:buyer_id, @shops.map{|u| [u.name, u.id]}) %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>	
+
+					</br>
+					</br>
+						<div class="center form-buttons">
+							<%= submit_tag("Buy Product") %>
+						</div>
+					<% end %>	
+	</div>
+		
+	

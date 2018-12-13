@@ -1,0 +1,51 @@
+<% @page_title = "Admin Index" %>
+
+<div class='center'>
+  <h1> Admin panel </h1>
+</div>
+<% if current_user.store_admin?%>
+
+
+  <%= link_to('<button type="button">Buy Products</button>'.html_safe, {controller: 'products', action: 'index'}, :class => 'action_new')%>
+
+   <%= link_to '<button type="button">Add Products to Shop</button>'.html_safe, {controller: 'products', :action => 'new', :store_admin_id => @user.id }, :class => 'action_new'%>
+
+  <%= link_to '<button type="button">Add Seller</button>'.html_safe, {:action => 'new'}, :class => 'action_new'%>
+
+
+   <% end %>
+</br>
+</br>
+<div class='center jumbotron'>
+    <table class="listing" summary="user list">
+    <tr class="header">
+      <!-- <th>&nbsp;</th> -->
+      <th>Name</th>
+      <th>Type</th>
+      <th>Products</th>
+      <th>Actions</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr class="<%= cycle('even', 'odd')%>" >
+      <% next if user.id == 1 %>
+     <!--  <td><%= user.id %></td> -->
+      <td><button type="button" class="btn btn-default"><%= user.name if user.products %></button></td>
+      <td><%= user.type.capitalize  if user.products %></td>
+     <td><button type="button" class="btn btn-default"><%= user.products.count %></button></td>
+
+
+       <td class="actions">
+         
+        <% if policy(user).Admin? %>
+        
+        <%= link_to('<button type="button" ">Show Details</button>'.html_safe, {controller: 'users', action: 'show', :id => user.id} , :class => 'action_user') %>
+
+        <%= link_to('<button type="button" ">Delete User</button>'.html_safe, {action: 'delete', :id => user.id} , :class => 'action_user') %>
+
+        <% end %>
+
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

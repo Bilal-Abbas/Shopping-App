@@ -2,7 +2,7 @@ class CreateShops < ActiveRecord::Migration[5.2]
   def up
     create_table :shops do |t|
 
-  		t.integer 'store_admin_id'
+  		t.integer 'store_admin_id', null: true;
 
       t.string 'name'
 

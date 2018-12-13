@@ -1,10 +1,12 @@
 class Shop < ApplicationRecord
 
-	#has_many :users
+	has_many :users, as: :store_admin
 
 	#has_many :store_admins
 
 	has_many :sellings, :as => :buyer
+
+	has_and_belongs_to_many :products
 
 	scope :visible, lambda { where(:visible => true) }
 	

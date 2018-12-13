@@ -1,0 +1,19 @@
+<% @page_title = "Delete User" %>
+
+<%= link_to(image_tag('back_button.png', :size => '40x40', :alt => 'back') +"Back to Users", {:action => 'index'}, :class => 'back_link') %>
+
+	<h2 class='center'>Delete User </h2>
+</br>
+</br>
+<div class="delete_center">
+	<%= form_for(:user, :url => {:action => 'destroy'}, :method => :delete) do |f| %>
+
+
+		<p> Do you want to delete the <a href=''> <%= @user.name %></a> user from the database??? </p>
+
+
+		<div class="form-buttons">
+			<%= submit_tag("Delete User") %>
+		</div>
+		<% end %>
+	</div>

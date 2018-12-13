@@ -1,0 +1,62 @@
+<% @page_title = "New Product" %>
+
+<h2 class='center'>Create Product </h2>
+<div class="center jumbotron">
+
+	<%= form_for(:product, :url => {:action => 'create'}) do |f| %>
+
+		<div class='row' style=''>
+				<div class='col-sm-3' style=''>
+
+				</div>
+				<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+					<%= f.label(:name, 'Name') %>
+				</div>
+				<div class='col-sm-3' style=''>
+					<%= f.text_field(:name) %>
+				</div>
+				<div class='col-sm-3' style=''>
+
+				</div>
+		</div>	
+
+		<div class='row' style=''>
+				<div class='col-sm-3' style=''>
+
+				</div>
+				<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+					<%= f.label(:price, 'Price(Rs.)') %>
+				</div>
+				<div class='col-sm-3' style=''>
+					<%= f.text_field(:price) %>
+				</div>
+				<div class='col-sm-3' style=';'>
+
+				</div>
+		</div>
+
+		<div class='row' style=''>
+				<div class='col-sm-3' style=''>
+
+				</div>
+				<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+					<%=f.label(:created_at) %>
+				</div>
+				<div class='col-sm-6' style='text-align: left;'>
+					<%= f.datetime_select(:created_at, :order => [:day, :month, :year]) %></td>
+				</div>
+		</div>
+
+
+						
+						
+
+						
+						
+
+		
+		<div class="form-buttons">
+			<%= submit_tag("Create Product")%>
+		</div>
+		<% end %>
+	</div>

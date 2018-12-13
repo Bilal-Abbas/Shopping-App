@@ -3,6 +3,8 @@ class Product < ApplicationRecord
 	has_many :sellings
 
 	has_and_belongs_to_many :users
+
+	has_and_belongs_to_many :shops
 	
 	scope :visible, lambda { where(:visible => true) }
 	

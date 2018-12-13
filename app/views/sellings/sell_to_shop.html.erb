@@ -1,0 +1,84 @@
+<% @page_title = "Shopping Store" %>
+
+	<h2 class='center'>Welcome Shopping Store</h2>
+	<h2 class='center'>Trade Details</h2>
+	<div class="jumbotron">
+		<%= form_for(:selling, :url => {:action => 'selling_to_shop',:seller_id => @seller.id}) do |f| %>
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:name, 'Seller Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.text_field :seller_name, :value => @seller.name, :readonly => true %>
+							<%= f.hidden_field :user_id, :value => @seller.id %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>	
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:product, 'Product Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+			
+								<%= f.select(:product_id, @product.map{|p| [p.name, p.id]}) %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>
+
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:price, 'Price(Rs.):') %>
+						</div>
+						<div class='col-sm-3' style=''>
+			
+								<%= f.text_field(:product_price) %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>
+
+
+					<div class='row' style=''>
+						<div class='col-sm-3' style=''>
+
+						</div>
+						<div class='col-sm-3' style='padding: 1% 0 1% 0;'>
+							<%= f.label(:buyer_name, 'Shop Name:') %>
+						</div>
+						<div class='col-sm-3' style=''>
+							<%= f.select(:buyer_id, @shops.map{|u| [u.name, u.id]}) %>
+							<%= f.hidden_field :buyer_type, :value => 'Shop' %>
+						</div>
+						<div class='col-sm-3' style=''>
+
+						</div>
+					</div>	
+
+
+					
+					</br>
+					</br>
+						<div class="center form-buttons">
+							<%= submit_tag("Buy Product") %>
+						</div>
+					<% end %>	
+	</div>
+		
+	

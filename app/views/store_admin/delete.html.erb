@@ -1,0 +1,18 @@
+<% @page_title = "Delete User" %>
+
+
+	<h2 class='center'>Delete User </h2>
+</br>
+</br>
+<div class="delete_center">
+	<%= form_for(:user, :url => {:controller => 'store_admin', :action => 'destroy', :id => @user.id}, method: :delete) do |f| %>
+
+
+		<p> Do you want to delete the <a href=''> <%= @user.name %></a> user from the database??? </p>
+
+
+		<div class="form-buttons">
+			<%= submit_tag("Delete User") %>
+		</div>
+		<% end %>
+	</div>

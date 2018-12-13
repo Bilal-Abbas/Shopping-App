@@ -1,0 +1,44 @@
+<% @page_title = "Purchase Products" %>
+
+    <h2 class='center'>Purchase Products From Users</h2>
+<div class="center jumbotron">
+  
+  <table class="listing" summary="user list">
+
+    <tr class="header">
+      <!-- <th>&nbsp;</th> -->
+      <th>Name</th>
+      <th>Price</th>
+      <th>Seller</th>
+
+      <th>Actions</th>
+    </tr>
+    <% @products.each do |product| %>
+    <% if product.users.present? && current_user.type != product.users.map { |u| u.type }.first %>
+    <tr class="<%= cycle('even', 'odd')%>" >
+      <!-- <td><%= product.id %></td> -->
+      <td><button type="button" class="btn btn-primary"><%= product.name %></button></td>
+      <td><button type="button" class="btn btn-success"><%= product.price %></button></td>
+      <td><button type="button" class="btn btn-info"><%= product.users.map{|u| u.name}.first%></button></td>
+
+
+       <td class="actions">
+
+          <% if policy(product).Buyer? %>
+                        
+            <%= link_to('<button type="button" ">Buy Product</button>'.html_safe,{controller: 'sellings',action: 'trade', :user_id => product.users.map{|u| u.id}.first, :product_id => product.id, :buyer_id => current_user.id,:product_price => product.price}, :class => 'action_user') %>
+
+          <% end %>
+
+          <% if current_user.store_admin? %>
+                        
+            <%= link_to('<button type="button" ">Buy Product for Shop</button>'.html_safe,{controller: 'sellings',action: 'buy_products_from_users', :user_id => product.users.map{|u| u.id}.first, :product_id => product.id, :buyer_id => current_user.id,:product_price => product.price}, :class => 'action_user') %>
+            <% end %>
+
+          <% end %>
+
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

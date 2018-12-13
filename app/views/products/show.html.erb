@@ -1,0 +1,32 @@
+<% @page_title = "Shown Products" %>
+
+
+<%= link_to("<<Back to Products", {:action => 'index', :class => 'back-link'}) %>
+
+  <div class="products show">
+    <h2>Shown Users </h2>
+
+    <table summary="product details view">
+      <tr>
+        <th>Name:</th>
+        <td><%=@product.name%></td>
+      </tr>
+      <tr>
+        <th>Quantity:</th>
+        <td><%=@product.price%></td>
+      </tr>
+
+      <tr>
+        <th>User:</th>
+        <td><%=@product.users.map {|u| u.name}%></td>
+      </tr>
+
+        <th>Created:</th>
+        <td><%=@product.created_at %></td>
+      </tr>
+      <tr>
+        <th>Updated:</th>
+        <td><%= @product.updated_at %></td>
+      </tr>
+    </table>
+  </div>

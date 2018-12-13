@@ -1,0 +1,20 @@
+<h1 class='center'>Access Denied </h1>
+<div class="center jumbotron">
+	<div class='row'>
+		<div class='col-sm-2'>
+		</div>
+		<div class='col-sm-8' id='denied'>
+			<%= image_tag "denied.png", :alt=> "banner", :size => '100X100'%>
+		</div>
+		<div class='col-sm-2'>
+		</div>
+		
+			<% if current_user.store_admin? %>
+				<%= link_to 'Back To Admin Panel', store_admin_path_url, class: "btn btn-primary btn-lg" %>
+			<% elsif current_user.seller? %>
+				<%= link_to 'Back To User Panel', seller_path_url, class: "btn btn-primary btn-lg" %>
+			<% else %>
+				<%= link_to 'Back To User Panel', seller_path_url, class: "btn btn-primary btn-lg" %>
+			<% end %>
+	</div>
+</div>

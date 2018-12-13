@@ -13,11 +13,23 @@ class ApplicationController < ActionController::Base
      if current_user.store_admin?
        store_admin_path_url
      elsif current_user.seller?
-       user_path_url
+       seller_path_url
     else
-        product_path_url
+        buyer_path_url
      end
 end
+
+
+    def logged_in?
+        !!current_user
+    end
+
+    def require_user
+        if !logged_in?
+        flash[:notice] = 'Please Login to Proceed'
+        redirect_to root_path
+        end
+    end
 
 
 

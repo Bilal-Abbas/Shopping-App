@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+  <!DOCTYPE html>
+  <html>
   <head>
      <title> ShopApp | <%= @page_title || "Admin" %></title>
     <%= csrf_meta_tags %>
@@ -10,7 +10,17 @@
 
   <body>
    <%= render 'layouts/navigation' %>
+   <div class='row'>
+    <div class='col-sm-9'>
 
+    </div>
+    <div class='col-sm-3'>
+         <% if current_user.present? %>
+            <button type="button" class="btnn btn-primary" style="float:right;margin-right:5%;">Login@<span class="badge"><%= current_user.email %></span></button>
+            <% end %>
+      </div>
+    </div>
+      </br>
        <p class="notifications"><%= notice %></p>
        <p class="notifications"><%= alert %></p>
      <div class='container'>
