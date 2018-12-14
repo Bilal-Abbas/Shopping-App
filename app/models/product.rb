@@ -8,9 +8,8 @@ class Product < ApplicationRecord
 
 
 	validates_presence_of :name
-	validates :name, :length => {:maximum => 15, :message => ' is a too long...'}
+	validates :name, :length => {:maximum => 20, :message => ' is a too long...'}
 	validates_presence_of :price
-	validates_length_of :name, :maximum => 10
 	
 	scope :visible, lambda { where(:visible => true) }
 	
