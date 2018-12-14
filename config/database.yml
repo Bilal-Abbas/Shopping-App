@@ -16,6 +16,7 @@ default: &default
   host: localhost
   username: shop_app
   password: 72a22ctevta
+  port: 5432
 
 development:
   <<: *default
