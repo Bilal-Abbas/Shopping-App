@@ -12,14 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2018_12_12_094154) do
 
-  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "products", force: :cascade do |t|
     t.string "name"
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "products_shops", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "products_shops", force: :cascade do |t|
     t.integer "shop_id"
     t.integer "product_id"
     t.datetime "created_at", null: false
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["shop_id", "product_id"], name: "index_products_shops_on_shop_id_and_product_id"
   end
 
-  create_table "products_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "products_users", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
     t.datetime "created_at", null: false
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["user_id", "product_id"], name: "index_products_users_on_user_id_and_product_id"
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
     t.bigint "resource_id"
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
-  create_table "sellings", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "sellings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "product_id", null: false
     t.integer "product_price", null: false
@@ -58,7 +61,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["user_id", "product_id"], name: "index_sellings_on_user_id_and_product_id"
   end
 
-  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "shops", force: :cascade do |t|
     t.integer "store_admin_id"
     t.string "name", limit: 30
     t.string "email", limit: 100
@@ -69,7 +72,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["store_admin_id"], name: "index_shops_on_store_admin_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.integer "shop_id"
     t.string "name"
     t.string "type"
@@ -85,7 +88,7 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
     t.index ["shop_id"], name: "index_users_on_shop_id"
   end
 
-  create_table "users_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users_roles", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
