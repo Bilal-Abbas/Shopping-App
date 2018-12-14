@@ -15,11 +15,11 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: 72a22ctevta
-  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
   database: shop_app_development
+  socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -49,6 +49,9 @@ test:
 #
 production:
   <<: *default
-  database: shop_app_production
-  username: shop_app
-  password: <%= ENV['SHOP_APP_DATABASE_PASSWORD'] %>
+  # database: shop_app_production
+  # username: shop_app
+  # password: <%= ENV['SHOP_APP_DATABASE_PASSWORD'] %>
+  database: ENV['DATABASE_URL']
+  username: ENV['SHOP_APP_DATABASE_USERNAME']
+  password: ENV['SHOP_APP_DATABASE_PASSWORDs']
