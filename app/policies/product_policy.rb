@@ -8,11 +8,11 @@ class ProductPolicy
 	end
 
 	def index?
-		user.present? || (user.seller? || (user.buyer? || user.store_admin?))
+		user.present? && (user.buyer? || user.store_admin?)
 	end
 
 	def Sindex?
-		user.present? || (user.buyer? || user.store_admin?)
+		user.present? && (user.buyer? || user.store_admin?)
 	end
 
 
@@ -33,7 +33,7 @@ class ProductPolicy
 	end
 
 	def new?
-		true
+		user.store_admin? || user.seller?
 	end
 
 	def create?
@@ -46,7 +46,7 @@ class ProductPolicy
 	end
 
 	def destroy?
-		true
+		user.present? && (user == product.users.first || user.store_admin?)
 	end
 
 	#byebug

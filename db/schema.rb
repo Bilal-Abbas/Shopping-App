@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 2018_12_12_094154) do
 
   create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "store_admin_id"
-    t.string "name"
-    t.string "email"
+    t.string "name", limit: 30
+    t.string "email", limit: 100
     t.string "address"
-    t.integer "phone"
+    t.bigint "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["store_admin_id"], name: "index_shops_on_store_admin_id"

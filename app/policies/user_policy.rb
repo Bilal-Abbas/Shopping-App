@@ -33,11 +33,11 @@ class UserPolicy < ApplicationPolicy
 	end
 
 	def show?
-		true
+		user.present? && (owner.id == user.id || user.store_admin?)
 	end
 
 	def edit?
-		user.present? && user == owner
+		user.present? && owner.id == user.id
 	end
 
 	def delete?
@@ -49,7 +49,7 @@ class UserPolicy < ApplicationPolicy
 	end
 
 	def create?
-		true
+		user.store_admin?
 	end
 
 
@@ -67,7 +67,7 @@ class UserPolicy < ApplicationPolicy
 
 	def trade?
 
-		user.present? && user.buyer?
+		user.present? && (user.buyer? || user.store_admin?)
 
 	end
 

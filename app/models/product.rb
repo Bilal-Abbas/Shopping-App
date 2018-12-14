@@ -5,6 +5,12 @@ class Product < ApplicationRecord
 	has_and_belongs_to_many :users
 
 	has_and_belongs_to_many :shops
+
+
+	validates_presence_of :name
+	validates :name, :length => {:maximum => 15, :message => ' is a too long...'}
+	validates_presence_of :price
+	validates_length_of :name, :maximum => 10
 	
 	scope :visible, lambda { where(:visible => true) }
 	

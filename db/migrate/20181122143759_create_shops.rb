@@ -4,13 +4,13 @@ class CreateShops < ActiveRecord::Migration[5.2]
 
   		t.integer 'store_admin_id', null: true;
 
-      t.string 'name'
+      t.string 'name', :limit => 30
 
-      t.string 'email'
+      t.string 'email', :limit => 100
 
     	t.string 'address'
 
-      t.integer 'phone'
+      t.integer 'phone', :limit => 6
 
       t.timestamps
     end

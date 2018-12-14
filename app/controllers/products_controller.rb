@@ -6,24 +6,44 @@ class ProductsController < ApplicationController
     @users = User.buyer
     @products = Product.all
     @shops = Shop.all
-    authorize @products
+    begin
+      authorize @products
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
   end
 
   def Sindex
     @users = User.all
     @products = Product.all
     @shops = Shop.all
-    authorize @products
+    begin
+      authorize @products
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
   end
 
   def show
      @product = Product.find(params[:id])
+    begin
       authorize @product
+     rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
   end
 
   def new
     @product = Product.new()
-    authorize @product
+    begin
+      authorize @product
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
     #byebug
 
   end
@@ -31,23 +51,38 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @shop = Shop.find(1)
-    authorize(@product, :new?)
+    begin
+      authorize(@product, :new?)
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
+    #byebug
+    if @product.name.present? && (@product.price.present? && @product.price != 0)
 
-    if current_user.store_admin?
-      @product.save
-      @shop.products << @product
-      flash[:notice] = 'The product has been created successfully and dispalyed at Shop side'
-      redirect_to(:controller => 'store_admin', :action => 'Sindex')
-    
-    elsif current_user.seller? 
-        @product.save
-        #byebug
-        current_user.products << @product
-        flash[:notice] = 'The product has been created successfully and dispalyed at User side'
-        redirect_to(:controller => 'users', :action => 'index')
+        if current_user.store_admin?
+          @product.save
+          @shop.products << @product
+          flash[:notice] = 'The product has been created successfully and dispalyed at Shop side'
+          redirect_to(:controller => 'store_admin', :action => 'Sindex')
+        
+        elsif current_user.seller? 
+            @product.save
+            #byebug
+            current_user.products << @product
+            flash[:notice] = 'The product has been created successfully and dispalyed at User side'
+            redirect_to(:controller => 'users', :action => 'index')
+        else
+
+          redirect_to(:controller => 'users', :action => 'index')
+
+        end
+
     else
 
-      redirect_to(:controller => 'users', :action => 'index')
+    flash[:notice] = 'No field should be blank or wrong arguments'
+
+    redirect_to(:action => 'new')
 
     end
     
@@ -64,14 +99,24 @@ class ProductsController < ApplicationController
   def delete
     #byebug
     @product = Product.find(params[:id])
+    begin
     authorize @product
-    
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end  
   end
 
   def destroy
     # puts '#############################################################################################################'
-    @product = Product.find(params[:id]).destroy
+    @product = Product.find(params[:id])
+    begin
     authorize @product
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
+    @product = Product.find(params[:id]).destroy
     # byebug
     flash[:notice] = "The product has deleted sucessfully"
     redirect_to(:controller => 'users', :action => 'index')

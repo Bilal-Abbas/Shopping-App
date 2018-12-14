@@ -8,29 +8,54 @@ class UsersController < ApplicationController
 
 	  def index
 		    @users = User.seller
+		begin
 		    authorize @users
+		rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  end
 
 	  def buyer_page
-	  	@users = User.buyer
-	  	authorize @users
+	  		@users = User.buyer
+	  	begin
+	  		authorize @users
+	  	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  end
 
 	  def show
 	  	
 		    @user = User.find(params[:id])
+		begin
 		    authorize @user
+		rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  end
 
 	  def edit
-	  	@user = User.find(params[:id])
-	  	authorize @user
+	  		@user = User.find(params[:id])
+	  	begin
+	  		authorize @user
+	  	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  end
 
 	  def new
 	  	#byebug
-	    @user = User.new()
-	  	authorize @user
+	    	@user = User.new()
+	    begin
+	  		authorize @user
+	  	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  	#byebug
 	  end
 
@@ -49,17 +74,33 @@ class UsersController < ApplicationController
 	  # end
 
 	  def update
-	  	authorize @user
+	  	begin
+	  		authorize @user
+	  	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end
 	  end
 
 	  def delete
-	  	@user = User.find(params[:id])
-		authorize @user
+	  		@user = User.find(params[:id])
+	  	begin
+	  		authorize @user
+	  	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end		
 	  end
 
 	  def destroy
-	  	@user = User.find(params[:id]).destroy
-    	authorize @user
+	  	@user = User.find(params[:id])
+	  	begin
+    		authorize @user
+    	rescue 
+	  		flash[:notice] = 'You do not have such privillages'
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	    end	
+	    @user = User.find(params[:id]).destroy
     	flash[:notice] = "The user has deleted sucessfully"
     	redirect_to(:controller => 'users', :action => 'index')
 	  end

@@ -6,7 +6,12 @@ class SellingsController < ApplicationController
 
   def trade
   	@user = User.find(params[:user_id])
+  begin
     authorize @user
+  rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+  end
     @product = Product.find(params[:product_id])
   	@selling = Selling.new()
   	
@@ -14,7 +19,12 @@ class SellingsController < ApplicationController
 
   def buying_from_user
   	@user = User.find(params[:buyer_id])
+    begin
     authorize @user
+    rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+    end
     product = Product.find(params[:product_id])
   	@selling = Selling.new(selling_params)
   	
@@ -33,7 +43,12 @@ class SellingsController < ApplicationController
 
     def sell_to_shop
       @seller = User.find(params[:seller_id])
+      begin
       authorize @seller
+      rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+      end
       @shops = Shop.all
       #byebug
       @product = @seller.products
@@ -43,7 +58,12 @@ class SellingsController < ApplicationController
 
     def selling_to_shop
         @seller = User.find(params[:seller_id])
+      begin
         authorize @seller
+      rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+      end
         @selling = Selling.new(selling_params)
 
         if @selling.save
@@ -60,7 +80,12 @@ class SellingsController < ApplicationController
 
     def buy_products_from_users
       @store_admin = User.find(1)
+      begin
       authorize @store_admin
+      rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+      end
       @user = User.find(params[:user_id])
       @shops = Shop.all
       @product = Product.find(params[:product_id])
@@ -70,7 +95,12 @@ class SellingsController < ApplicationController
 
      def buying_products_from_users
         @store_admin = User.find(1)
+        begin
         authorize @store_admin
+        rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+        end
         @shop = Shop.find(params[:shop_id])
         product = Product.find(params[:product_id])
         @selling = Selling.new(selling_params)
@@ -89,7 +119,12 @@ class SellingsController < ApplicationController
 
      def buy_products_from_shops
       @buyer = User.buyer
+      begin
       authorize @buyer
+      rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+      end
       @shops = Shop.find(params[:user_id])
       @product = Product.find(params[:product_id])
       @selling = Selling.new()
@@ -98,7 +133,12 @@ class SellingsController < ApplicationController
 
      def buying_products_from_shops
         @buyer = User.buyer
+        begin
         authorize @buyer
+        rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+        end
         product = Product.find(params[:product_id])
         @user = User.find(params[:buyer_id])
         @selling = Selling.new(selling_params)
@@ -118,7 +158,12 @@ class SellingsController < ApplicationController
     def transaction
 
       @users = User.all
+      begin
       authorize @users
+      rescue 
+        flash[:notice] = 'You do not have such privillages'
+        redirect_to(controller: 'public', action: 'system_error_Access_denied') 
+      end
       @products = Product.all
       @sellings = Selling.all
 

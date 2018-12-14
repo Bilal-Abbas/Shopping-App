@@ -4,14 +4,14 @@ class StoreAdminController < ApplicationController
 	before_action :require_admin, only: [:Sindex, :new, :create, :delete, :destroy]
 
 	def Sindex
+		@user = User.find(1)
 		begin
-			@user = User.find(1)
 		  	authorize @user
-		  	@users = User.all
 		rescue 
 	  		flash[:notice] = 'You do not have such privillages'
 	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
 	    end
+	    @users = User.all
 
 	end
 	 def new
@@ -64,11 +64,12 @@ class StoreAdminController < ApplicationController
     	authorize @user
     	rescue 
 	  		flash[:notice] = 'You do not have such privillages'
-	  		redirect_to root_path	
+	  		redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+	  		return false
 	    end
 	    @user = User.find(params[:id]).destroy
     	flash[:notice] = "The user has deleted sucessfully"
-    	redirect_to(controller: 'public', action: 'system_error_Access_denied')	
+    	redirect_to store_admin_path_url
 	  end
 
 private

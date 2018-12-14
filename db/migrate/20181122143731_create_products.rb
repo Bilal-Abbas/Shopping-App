@@ -2,9 +2,9 @@ class CreateProducts < ActiveRecord::Migration[5.2]
   def up
     create_table :products do |t|
 		
-		t.string 'name', :null => true;
+		  t.string 'name'
 
-    	t.integer 'price', :null => true;
+    	t.integer 'price'
     	
       t.timestamps
     end
